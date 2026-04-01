@@ -1,5 +1,7 @@
-import java.util.ArrayList;
-import java.util.List;
+
+import java.util.HashSet;
+
+import java.util.Set;
 
 public class TrainConsistManagement {
 
@@ -8,21 +10,40 @@ public class TrainConsistManagement {
         System.out.println(" ===TrainConsistManagementApp=== ");
         System.out.println("===================================");
 
-        List<String> trainConsist = new ArrayList<>();
-        System.out.println(" Train initialized successfully...");
+       Set<String> bogies= new HashSet<>();
 
-        List<String> TrainConsist = new ArrayList<>();
+        bogies.add("BG101");
+        bogies.add("BG102");
+        bogies.add("BG103");
+        bogies.add("BG104");
 
-        // Initialization confirmation
-        System.out.println("Train initialized successfully...");
+        bogies.add("BG101");
+        bogies.add("BG102");
 
-        // Display initial bogie count
-        System.out.println("Initial Bogie Count: " + trainConsist.size());
+        System.out.println("Bogie IDs After Insertion: " + bogies);
 
-        // Display current train consist
-        System.out.println("Current Train Consist: " + trainConsist);
 
-        // Ready message
-        System.out.println("System ready for operations...");
+        System.out.println("\nNote:");
+        System.out.println("Duplicates are automatically ignored by HashSet");
+
+        System.out.println("\nUC3 uniqueness validation completed...");
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
