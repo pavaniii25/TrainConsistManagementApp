@@ -1,37 +1,35 @@
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.HashMap;
+
+import java.util.Map;
 
 public class TrainConsistManagement {
 
-        public static void main(String[] args) {
 
+                public static void main(String[] args) {
 
-            System.out.println("=== UCS Preserve Insertion Order of Bogies ===");
-            System.out.println();
+                    System.out.println("=== UC6 Map Bogie to Capacity (HashMap) ===");
+                    System.out.println();
 
-            // LinkedHashSet preserves insertion order and ensures uniqueness
-            Set<String> formation = new LinkedHashSet<>();
+                    // HashMap stores data in key-value format
+                    Map<String, Integer> capacityMap = new HashMap<>();
 
-            // Add bogies (including duplicates)
-            formation.add("Engine");
-            formation.add("Sleeper");
-            formation.add("Cargo");
-            formation.add("Guard");
-            formation.add("Sleeper"); // Duplicate entry
-            formation.add("Cargo");   // Duplicate entry
+                    // Insert bogie capacities
+                    capacityMap.put("First Class", 24);
+                    capacityMap.put("Cargo", 120);
+                    capacityMap.put("Sleeper", 72);
+                    capacityMap.put("AC Chair", 56);
 
-            // Display final train formation
-            System.out.println("Final Train Formation:");
-            System.out.println(formation);
+                    // Display bogie and capacity details
+                    System.out.println("Bogie Capacity Details:");
+                    for (Map.Entry<String, Integer> entry : capacityMap.entrySet()) {
+                        System.out.print(entry.getKey() + " -> " + entry.getValue() + "  ");
+                    }
+                    System.out.println(); // For newline
 
-            // Note about LinkedHashSet
-            System.out.println("\nNote:");
-            System.out.println("LinkedHashSet preserves insertion order and removes duplicates automatically.");
-
-            // Completion message
-            System.out.println("\nUCS formation setup completed...");
-        }
-    }
+                    // Completion message
+                    System.out.println("\nUC6 bogie-capacity mapping completed...");
+                }
+            }
 
 
 
