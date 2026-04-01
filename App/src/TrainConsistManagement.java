@@ -3,26 +3,45 @@ import java.util.List;
 
 public class TrainConsistManagement {
 
-    public static void main(String[] args) {
-        System.out.println("===================================");
-        System.out.println(" ===TrainConsistManagementApp=== ");
-        System.out.println("===================================");
 
-        List<String> trainConsist = new ArrayList<>();
-        System.out.println(" Train initialized successfully...");
 
-        List<String> TrainConsist = new ArrayList<>();
 
-        // Initialization confirmation
-        System.out.println("Train initialized successfully...");
+        public static void main(String[] args) {
 
-        // Display initial bogie count
-        System.out.println("Initial Bogie Count: " + trainConsist.size());
 
-        // Display current train consist
-        System.out.println("Current Train Consist: " + trainConsist);
+            System.out.println("002 Add Passenger Bogies to Train");
+            System.out.println();
 
-        // Ready message
-        System.out.println("System ready for operations...");
+
+            List<String> passengerBogies = new ArrayList<>();
+
+
+            passengerBogies.add("Sleeper");
+            passengerBogies.add("AC Chair");
+            passengerBogies.add("First Class");
+
+
+            System.out.println("After Adding Bogies:");
+            System.out.println("Passenger Bogies: " + passengerBogies);
+
+
+            passengerBogies.remove("AC Chair");
+
+            System.out.println("\nAfter Removing \"AC Chair\":");
+            System.out.println("Passenger Bogies: " + passengerBogies);
+
+
+            System.out.println("\nChecking if \"Sleeper\" exists:");
+            boolean exists = passengerBogies.contains("Sleeper");
+            System.out.println("Contains Sleeper?: " + exists);
+
+
+            System.out.println("\nFinal Train Passenger Consist:");
+            System.out.println(passengerBogies);
+
+
+            System.out.println("\nUC2 operations completed successfully...");
+        }
     }
-}
+
+
