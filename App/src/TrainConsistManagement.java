@@ -5,11 +5,8 @@ import java.util.Set;
 
 public class TrainConsistManagement {
 
-    public static void main(String[] args) {
-        System.out.println("===================================");
-        System.out.println(" ===TrainConsistManagementApp=== ");
-        System.out.println("===================================");
 
+ UC3
        Set<String> bogies= new HashSet<>();
 
         bogies.add("BG101");
@@ -29,7 +26,6 @@ public class TrainConsistManagement {
         System.out.println("\nUC3 uniqueness validation completed...");
     }
 }
-
 
 
 
