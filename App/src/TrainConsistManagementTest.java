@@ -3,84 +3,88 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class TrainConsistManagementTest {
 
-    // Custom Exception
-    static class InvalidCapacityException extends Exception {
-        public InvalidCapacityException(String message) {
+    // Custom Runtime Exception
+    static class CargoSafetyException extends RuntimeException {
+        public CargoSafetyException(String message) {
             super(message);
         }
     }
 
-    // Passenger Bogie Model with validation
-    static class PassengerBogie {
-        String type;
-        int capacity;
+    // Goods Bogie Model
+    static class GoodsBogie {
+        String shape;
+        String cargo;
 
-        PassengerBogie(String type, int capacity) throws InvalidCapacityException {
-            if (capacity <= 0) {
-                throw new InvalidCapacityException("Capacity must be greater than zero");
+        GoodsBogie(String shape) {
+            this.shape = shape;
+        }
+
+        // Assign cargo with try-catch-finally
+        void assignCargo(String cargo) {
+            try {
+                // Rule: Rectangular cannot carry Petroleum
+                if (shape.equalsIgnoreCase("Rectangular") &&
+                        cargo.equalsIgnoreCase("Petroleum")) {
+                    throw new CargoSafetyException("Unsafe cargo assignment!");
+                }
+                this.cargo = cargo;
+            } catch (CargoSafetyException e) {
+                // handled internally
+                this.cargo = null;
+            } finally {
+                // always executes
+                System.out.println("Cargo validation completed for " + shape + " bogie");
             }
-            this.type = type;
-            this.capacity = capacity;
         }
 
-        String getType() {
-            return type;
-        }
-
-        int getCapacity() {
-            return capacity;
+        String getCargo() {
+            return cargo;
         }
     }
 
     @Test
-    void testException_ValidCapacityCreation() throws InvalidCapacityException {
-        PassengerBogie bogie = new PassengerBogie("Sleeper", 72);
-        assertNotNull(bogie);
+    void testCargo_SafeAssignment() {
+        GoodsBogie bogie = new GoodsBogie("Cylindrical");
+        bogie.assignCargo("Petroleum");
+
+        assertEquals("Petroleum", bogie.getCargo());
     }
 
     @Test
-    void testException_NegativeCapacityThrowsException() {
-        Exception ex = assertThrows(InvalidCapacityException.class, () -> {
-            new PassengerBogie("Sleeper", -10);
-        });
+    void testCargo_UnsafeAssignmentHandled() {
+        GoodsBogie bogie = new GoodsBogie("Rectangular");
 
-        assertEquals("Capacity must be greater than zero", ex.getMessage());
+        // should not throw (handled internally)
+        assertDoesNotThrow(() -> bogie.assignCargo("Petroleum"));
+
+        assertNull(bogie.getCargo());
     }
 
     @Test
-    void testException_ZeroCapacityThrowsException() {
-        Exception ex = assertThrows(InvalidCapacityException.class, () -> {
-            new PassengerBogie("Sleeper", 0);
-        });
+    void testCargo_CargoNotAssignedAfterFailure() {
+        GoodsBogie bogie = new GoodsBogie("Rectangular");
+        bogie.assignCargo("Petroleum");
 
-        assertEquals("Capacity must be greater than zero", ex.getMessage());
+        assertNull(bogie.getCargo());
     }
 
     @Test
-    void testException_ExceptionMessageValidation() {
-        Exception ex = assertThrows(InvalidCapacityException.class, () -> {
-            new PassengerBogie("AC Chair", 0);
-        });
+    void testCargo_ProgramContinuesAfterException() {
+        GoodsBogie b1 = new GoodsBogie("Rectangular");
+        GoodsBogie b2 = new GoodsBogie("Cylindrical");
 
-        assertEquals("Capacity must be greater than zero", ex.getMessage());
+        b1.assignCargo("Petroleum"); // unsafe
+        b2.assignCargo("Petroleum"); // safe
+
+        assertNull(b1.getCargo());
+        assertEquals("Petroleum", b2.getCargo());
     }
 
     @Test
-    void testException_ObjectIntegrityAfterCreation() throws InvalidCapacityException {
-        PassengerBogie bogie = new PassengerBogie("First Class", 24);
+    void testCargo_FinallyBlockExecution() {
+        GoodsBogie bogie = new GoodsBogie("Rectangular");
 
-        assertEquals("First Class", bogie.getType());
-        assertEquals(24, bogie.getCapacity());
-    }
-
-    @Test
-    void testException_MultipleValidBogiesCreation() throws InvalidCapacityException {
-        PassengerBogie b1 = new PassengerBogie("Sleeper", 72);
-        PassengerBogie b2 = new PassengerBogie("AC Chair", 56);
-        PassengerBogie b3 = new PassengerBogie("First Class", 24);
-
-        assertNotNull(b1);
-        assertNotNull(b2);
-        assertNotNull(b3);
+        // If finally fails, test will fail due to exception
+        assertDoesNotThrow(() -> bogie.assignCargo("Petroleum"));
     }
 }
